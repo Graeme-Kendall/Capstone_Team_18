@@ -1,0 +1,128 @@
+Rev1:
+Teachnig Tech Version
+Worked without bed attached, pop and now it won't connect to pc, shows Maxtemp bed error
+
+Rev2:
+Rebuilt Rev1, no changes
+
+Rev3
+Added to HAL.h:
+// Ignore temp readings during develepment.
+#define BOGUS_TEMPERATURE_FAILSAFE_OVERRIDE
+
+Still gives maxtemp bed error
+
+Rev4:
+Removed previous change
+Set maxtemp to 1000
+
+Reads extruder correctly, bed wrong
+Suspect our bed is destroying thermistor ports
+
+Rev5:
+Changed thermistors to ender 3 values
+Tested in ender 3 using E0 and E1 inputs
+GREAT SUCCESS
+
+Rev6:
+Added Servo Functionality
+Uncommented NUM_SERVOS, changed 3 to 1
+
+Rev7:
+NUM_SERVOS Changed 1 back to 3, changed delay to {300, 300, 300}
+Want to see which index actually controls the servo in marlin
+SUCCESS
+Must use M280 P0 S(angle)
+
+Rev 8:
+Added bed, using TH1 port instead of TB
+Set temp 1 pin to P0_23_A0, temp 0 to P0_24_A1, temp bed to P0_25_A2
+Changed back to 1 extruder
+Changed temp sensor 0 from 1 to 5
+Changes temp sensor 1 from 1 to 0
+Changed temp sensor bed from 0 to 1
+SUCCESS
+
+Rev 9:
+Add spindle control through E1 output
+Changed FAN1_PIN to P2_04
+M106 P0 S255
+
+Rev 10:
+Temporarily set dummy hotend temp to test extruder
+Reset max temps
+
+Rev 11:
+Removed dummy thermistor
+FIRST STABLE VERSION
+Still needs machine dimensions
+
+Rev 12:
+Set machine dimensions:
+// The size of the print bed
+#define X_BED_SIZE 235
+#define Y_BED_SIZE 180
+
+// Travel limits (mm) after homing, corresponding to endstop positions.
+#define X_MIN_POS -32
+#define Y_MIN_POS 0
+#define Z_MIN_POS 0
+#define X_MAX_POS 267
+#define Y_MAX_POS Y_BED_SIZE
+#define Z_MAX_POS 45
+
+Set Steps Per Unit:
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 800, 800, 800, 415}
+
+Set Extruder 0 direction to invert - false:
+#define INVERT_E0_DIR false
+
+Set invert z axis to true:
+#define INVERT_Z_DIR true
+
+DIRECTIONS WRONG FOR ALL AXES, EXTRUDER UNKNOWN
+
+Rev 13:
+Inverted all axes
+// Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
+#define INVERT_X_DIR false
+#define INVERT_Y_DIR false
+#define INVERT_Z_DIR false
+
+Rev 14:
+Disabled software endstops
+
+Rev 15:
+Added custom bootscreen
+Changed SD card to onboard
+
+Rev 16:
+Added custom name
+
+Rev 17:
+Changed z direction
+changed microsteps per mm
+
+Rev 18:
+Changed microsteps per mm
+
+Rev 19:
+Changed X,Y Direction
+
+Rev 20:
+Changed Y direction
+
+NOTES:
+Move Servos: 		M280 P0 S(Angle) - the range is 0 to 180 degrees
+Control Spindle: 	M106 P0 S(Power) - power can be anything form 0 (off) to 255 (24V)
+
+I've tested:
+	All axes in CL mode
+	Extruder open loop
+	Bed heating
+	Bed temperature reading
+	Extruder heating
+	Extruder temperature reading
+	Fan output
+	Spindle output
+	Servo motion
